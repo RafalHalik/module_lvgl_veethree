@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef ZEPHYR_MODULES_LVGL_FS_H_
-#define ZEPHYR_MODULES_LVGL_FS_H_
+#ifndef ZEPHYR_MODULES_LVGL_FS_VEETHREE_H_
+#define ZEPHYR_MODULES_LVGL_FS_VEETHREE_H_
 
 #ifdef __cplusplus
 extern "C" {

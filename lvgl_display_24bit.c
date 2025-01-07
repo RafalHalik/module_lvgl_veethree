@@ -32,7 +32,7 @@ void lvgl_set_px_cb_24bit(lv_disp_drv_t *disp_drv, uint8_t *buf, lv_coord_t buf_
 	uint8_t *buf_xy = buf + x * 3U + y * 3U * buf_w;
 	lv_color32_t converted_color;
 
-#ifdef CONFIG_LV_COLOR_DEPTH_32
+#ifdef CONFIG_LV_COLOR_DEPTH_32_VEETHREE
 	if (opa != LV_OPA_COVER) {
 		lv_color_t mix_color;
 

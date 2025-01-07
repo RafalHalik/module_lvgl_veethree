@@ -10,7 +10,7 @@
 #include <zephyr/init.h>
 #include <zephyr/sys/sys_heap.h>
 
-#ifdef CONFIG_LV_Z_MEMORY_POOL_CUSTOM_SECTION
+#ifdef CONFIG_LV_Z_MEMORY_POOL_CUSTOM_SECTION_VEETHREE
 #define HEAP_MEM_ATTRIBUTES Z_GENERIC_SECTION(.lvgl_heap) __aligned(8)
 #else
 #define HEAP_MEM_ATTRIBUTES __aligned(8)

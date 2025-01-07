@@ -8,11 +8,11 @@
 #include <lvgl.h>
 #include <zephyr/autoconf.h>
 
-#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP
+#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP_VEETHREE
 #include "lvgl_mem.h"
 #endif
 
-#ifdef CONFIG_LV_USE_MONKEY
+#ifdef CONFIG_LV_USE_MONKEY_VEETHREE
 static lv_monkey_t *lvgl_monkeys[CONFIG_LV_Z_MAX_MONKEY_COUNT];
 
 static const char *lvgl_monkey_indev_as_string(lv_monkey_t *monkey)
@@ -25,13 +25,13 @@ static const char *lvgl_monkey_indev_as_string(lv_monkey_t *monkey)
 	}
 
 	switch (input_device->driver->type) {
-	case LV_INDEV_TYPE_POINTER:
+	case LV_INDEV_TYPE_POINTER_VEETHREE:
 		return "pointer";
-	case LV_INDEV_TYPE_KEYPAD:
+	case LV_INDEV_TYPE_KEYPAD_VEETHREE:
 		return "keypad";
-	case LV_INDEV_TYPE_BUTTON:
+	case LV_INDEV_TYPE_BUTTON_VEETHREE:
 		return "button";
-	case LV_INDEV_TYPE_ENCODER:
+	case LV_INDEV_TYPE_ENCODER_VEETHREE:
 		return "encoder";
 	default:
 		return "unknown";
@@ -41,13 +41,13 @@ static const char *lvgl_monkey_indev_as_string(lv_monkey_t *monkey)
 static int lvgl_monkey_indev_from_string(const char *str, lv_indev_type_t *input_device)
 {
 	if (strcmp(str, "pointer") == 0) {
-		*input_device = LV_INDEV_TYPE_POINTER;
+		*input_device = LV_INDEV_TYPE_POINTER_VEETHREE;
 	} else if (strcmp(str, "keypad") == 0) {
-		*input_device = LV_INDEV_TYPE_KEYPAD;
+		*input_device = LV_INDEV_TYPE_KEYPAD_VEETHREE;
 	} else if (strcmp(str, "button") == 0) {
-		*input_device = LV_INDEV_TYPE_BUTTON;
+		*input_device = LV_INDEV_TYPE_BUTTON_VEETHREE;
 	} else if (strcmp(str, "encoder") == 0) {
-		*input_device = LV_INDEV_TYPE_ENCODER;
+		*input_device = LV_INDEV_TYPE_ENCODER_VEETHREE;
 	} else {
 		return -EINVAL;
 	}
@@ -57,7 +57,7 @@ static int lvgl_monkey_indev_from_string(const char *str, lv_indev_type_t *input
 static void dump_monkey_info(const struct shell *sh)
 {
 	shell_print(sh, "id   device    active");
-	for (size_t i = 0; i < CONFIG_LV_Z_MAX_MONKEY_COUNT; i++) {
+	for (size_t i = 0; i < CONFIG_LV_Z_MAX_MONKEY_COUNT_VEETHREE; i++) {
 		if (lvgl_monkeys[i] != NULL) {
 			shell_print(sh, "%-4u %-9s %-3s", i,
 				    lvgl_monkey_indev_as_string(lvgl_monkeys[i]),
@@ -93,7 +93,7 @@ static int cmd_lvgl_monkey_create(const struct shell *sh, size_t argc, char *arg
 		}
 	}
 
-	for (size_t i = 0; i < CONFIG_LV_Z_MAX_MONKEY_COUNT; i++) {
+	for (size_t i = 0; i < CONFIG_LV_Z_MAX_MONKEY_COUNT_VEETHREE; i++) {
 		if (lvgl_monkeys[i] == NULL) {
 			lvgl_monkeys[i] = lv_monkey_create(&default_config);
 			lv_monkey_set_enable(lvgl_monkeys[i], true);
@@ -117,7 +117,7 @@ static int cmd_lvgl_monkey_set(const struct shell *sh, size_t argc, char *argv[]
 	int index;
 
 	index = atoi(argv[1]);
-	if (index < 0 || index >= CONFIG_LV_Z_MAX_MONKEY_COUNT || lvgl_monkeys[index] == NULL) {
+	if (index < 0 || index >= CONFIG_LV_Z_MAX_MONKEY_COUNT_VEETHREE || lvgl_monkeys[index] == NULL) {
 		shell_error(sh, "Invalid monkey index");
 		return -ENOEXEC;
 	}
@@ -149,7 +149,7 @@ static int cmd_lvgl_stats(const struct shell *sh, size_t argc, char *argv[])
 
 static int cmd_lvgl_stats_memory(const struct shell *sh, size_t argc, char *argv[])
 {
-#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP
+#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP_VEETHREE
 	bool dump_chunks = false;
 
 	if (argc == 2) {
@@ -180,7 +180,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(lvgl_cmd_stats,
 					     cmd_lvgl_stats_memory, 1, 1),
 			       SHELL_SUBCMD_SET_END);
 
-#ifdef CONFIG_LV_USE_MONKEY
+#ifdef CONFIG_LV_USE_MONKEY_VEETHREE
 SHELL_STATIC_SUBCMD_SET_CREATE(
 	lvgl_cmd_monkey,
 	SHELL_CMD_ARG(create, NULL,
@@ -196,7 +196,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
 
 SHELL_STATIC_SUBCMD_SET_CREATE(
 	lvgl_cmds, SHELL_CMD(stats, &lvgl_cmd_stats, "Show LVGL statistics", cmd_lvgl_stats),
-#ifdef CONFIG_LV_USE_MONKEY
+#ifdef CONFIG_LV_USE_MONKEY_VEETHREE
 	SHELL_CMD(monkey, &lvgl_cmd_monkey, "LVGL monkey testing", cmd_lvgl_monkey),
 #endif /* CONFIG_LV_USE_MONKEY */
 	SHELL_SUBCMD_SET_END);

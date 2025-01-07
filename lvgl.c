@@ -9,16 +9,16 @@
 #include <lvgl.h>
 #include "lvgl_display.h"
 #include "lvgl_common_input.h"
-#ifdef CONFIG_LV_Z_USE_FILESYSTEM
+#ifdef CONFIG_LV_Z_USE_FILESYSTEM_VEETHREE
 #include "lvgl_fs.h"
 #endif
-#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP
+#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP_VEETHREE
 #include "lvgl_mem.h"
 #endif
-#include LV_MEM_CUSTOM_INCLUDE
+#include LV_MEM_CUSTOM_INCLUDE_VEETHREE
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(lvgl, CONFIG_LV_Z_LOG_LEVEL);
+LOG_MODULE_REGISTER(lvgl, CONFIG_LV_Z_LOG_LEVEL_VEETHREE);
 
 static lv_disp_drv_t disp_drv;
 struct lvgl_disp_data disp_data = {
@@ -27,7 +27,7 @@ struct lvgl_disp_data disp_data = {
 
 #define DISPLAY_NODE DT_CHOSEN(zephyr_display)
 
-#ifdef CONFIG_LV_Z_BUFFER_ALLOC_STATIC
+#ifdef CONFIG_LV_Z_BUFFER_ALLOC_STATIC_VEETHREE
 
 static lv_disp_draw_buf_t disp_buf;
 
@@ -35,24 +35,24 @@ static lv_disp_draw_buf_t disp_buf;
 #define DISPLAY_HEIGHT DT_PROP(DISPLAY_NODE, height)
 
 #define BUFFER_SIZE                                                                                \
-	(CONFIG_LV_Z_BITS_PER_PIXEL *                                                              \
-	 ((CONFIG_LV_Z_VDB_SIZE * DISPLAY_WIDTH * DISPLAY_HEIGHT) / 100) / 8)
+	(CONFIG_LV_Z_BITS_PER_PIXEL_VEETHREE *                                                              \
+	 ((CONFIG_LV_Z_VDB_SIZE_VEETHREE * DISPLAY_WIDTH * DISPLAY_HEIGHT) / 100) / 8)
 
-#define NBR_PIXELS_IN_BUFFER (BUFFER_SIZE * 8 / CONFIG_LV_Z_BITS_PER_PIXEL)
+#define NBR_PIXELS_IN_BUFFER (BUFFER_SIZE * 8 / CONFIG_LV_Z_BITS_PER_PIXEL_VEETHREE)
 
 /* NOTE: depending on chosen color depth buffer may be accessed using uint8_t *,
  * uint16_t * or uint32_t *, therefore buffer needs to be aligned accordingly to
  * prevent unaligned memory accesses.
  */
 static uint8_t buf0[BUFFER_SIZE]
-#ifdef CONFIG_LV_Z_VBD_CUSTOM_SECTION
+#ifdef CONFIG_LV_Z_VBD_CUSTOM_SECTION_VEETHREE
 	Z_GENERIC_SECTION(.lvgl_buf)
 #endif
 		__aligned(CONFIG_LV_Z_VDB_ALIGN);
 
-#ifdef CONFIG_LV_Z_DOUBLE_VDB
+#ifdef CONFIG_LV_Z_DOUBLE_VDB_VEETHREE
 static uint8_t buf1[BUFFER_SIZE]
-#ifdef CONFIG_LV_Z_VBD_CUSTOM_SECTION
+#ifdef CONFIG_LV_Z_VBD_CUSTOM_SECTION_VEETHREE
 	Z_GENERIC_SECTION(.lvgl_buf)
 #endif
 		__aligned(CONFIG_LV_Z_VDB_ALIGN);
@@ -60,7 +60,7 @@ static uint8_t buf1[BUFFER_SIZE]
 
 #endif /* CONFIG_LV_Z_BUFFER_ALLOC_STATIC */
 
-#if CONFIG_LV_Z_LOG_LEVEL != 0
+#if CONFIG_LV_Z_LOG_LEVEL_VEETHREE != 0
 /*
  * In LVGLv8 the signature of the logging callback has changes and it no longer
  * takes the log level as an integer argument. Instead, the log level is now
@@ -97,7 +97,7 @@ static void lvgl_log(const char *buf)
 }
 #endif
 
-#ifdef CONFIG_LV_Z_BUFFER_ALLOC_STATIC
+#ifdef CONFIG_LV_Z_BUFFER_ALLOC_STATIC_VEETHREE
 
 static int lvgl_allocate_rendering_buffers(lv_disp_drv_t *disp_driver)
 {
@@ -119,7 +119,7 @@ static int lvgl_allocate_rendering_buffers(lv_disp_drv_t *disp_driver)
 	}
 
 	disp_driver->draw_buf = &disp_buf;
-#ifdef CONFIG_LV_Z_DOUBLE_VDB
+#ifdef CONFIG_LV_Z_DOUBLE_VDB_VEETHREE
 	lv_disp_draw_buf_init(disp_driver->draw_buf, &buf0, &buf1, NBR_PIXELS_IN_BUFFER);
 #else
 	lv_disp_draw_buf_init(disp_driver->draw_buf, &buf0, NULL, NBR_PIXELS_IN_BUFFER);
@@ -166,25 +166,25 @@ static int lvgl_allocate_rendering_buffers(lv_disp_drv_t *disp_driver)
 		return -ENOTSUP;
 	}
 
-	buf0 = LV_MEM_CUSTOM_ALLOC(buf_size);
+	buf0 = LV_MEM_CUSTOM_ALLOC_VEETHREE(buf_size);
 	if (buf0 == NULL) {
 		LOG_ERR("Failed to allocate memory for rendering buffer");
 		return -ENOMEM;
 	}
 
-#ifdef CONFIG_LV_Z_DOUBLE_VDB
-	buf1 = LV_MEM_CUSTOM_ALLOC(buf_size);
+#ifdef CONFIG_LV_Z_DOUBLE_VDB_VEETHREE
+	buf1 = LV_MEM_CUSTOM_ALLOC_VEETHREE(buf_size);
 	if (buf1 == NULL) {
-		LV_MEM_CUSTOM_FREE(buf0);
+		LV_MEM_CUSTOM_FREE_VEETHREE(buf0);
 		LOG_ERR("Failed to allocate memory for rendering buffer");
 		return -ENOMEM;
 	}
 #endif
 
-	disp_driver->draw_buf = LV_MEM_CUSTOM_ALLOC(sizeof(lv_disp_draw_buf_t));
+	disp_driver->draw_buf = LV_MEM_CUSTOM_ALLOC_VEETHREE(sizeof(lv_disp_draw_buf_t));
 	if (disp_driver->draw_buf == NULL) {
-		LV_MEM_CUSTOM_FREE(buf0);
-		LV_MEM_CUSTOM_FREE(buf1);
+		LV_MEM_CUSTOM_FREE_VEETHREE(buf0);
+		LV_MEM_CUSTOM_FREE_VEETHREE(buf1);
 		LOG_ERR("Failed to allocate memory to store rendering buffers");
 		return -ENOMEM;
 	}
@@ -205,50 +205,50 @@ static int lvgl_init(void)
 		return -ENODEV;
 	}
 
-#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP
+#ifdef CONFIG_LV_Z_MEM_POOL_SYS_HEAP_VEETHREE
 	lvgl_heap_init();
 #endif
 
-#if CONFIG_LV_Z_LOG_LEVEL != 0
-	lv_log_register_print_cb(lvgl_log);
+#if CONFIG_LV_Z_LOG_LEVEL_VEETHREE != 0
+	// lv_log_register_print_cb(lvgl_log);
 #endif
 
 	lv_init();
 
-#ifdef CONFIG_LV_Z_USE_FILESYSTEM
-	lvgl_fs_init();
-#endif
+// #ifdef CONFIG_LV_Z_USE_FILESYSTEM
+// 	lvgl_fs_init();
+// #endif
 
-	disp_data.display_dev = display_dev;
-	display_get_capabilities(display_dev, &disp_data.cap);
+// 	disp_data.display_dev = display_dev;
+// 	display_get_capabilities(display_dev, &disp_data.cap);
 
-	lv_disp_drv_init(&disp_drv);
-	disp_drv.user_data = (void *)&disp_data;
+// 	lv_disp_drv_init(&disp_drv);
+// 	disp_drv.user_data = (void *)&disp_data;
 
-#ifdef CONFIG_LV_Z_FULL_REFRESH
-	disp_drv.full_refresh = 1;
-#endif
+// #ifdef CONFIG_LV_Z_FULL_REFRESH
+// 	disp_drv.full_refresh = 1;
+// #endif
 
-	err = lvgl_allocate_rendering_buffers(&disp_drv);
-	if (err != 0) {
-		return err;
-	}
+// 	err = lvgl_allocate_rendering_buffers(&disp_drv);
+// 	if (err != 0) {
+// 		return err;
+// 	}
 
-	if (set_lvgl_rendering_cb(&disp_drv) != 0) {
-		LOG_ERR("Display not supported.");
-		return -ENOTSUP;
-	}
+// 	if (set_lvgl_rendering_cb(&disp_drv) != 0) {
+// 		LOG_ERR("Display not supported.");
+// 		return -ENOTSUP;
+// 	}
 
-	if (lv_disp_drv_register(&disp_drv) == NULL) {
-		LOG_ERR("Failed to register display device.");
-		return -EPERM;
-	}
+// 	if (lv_disp_drv_register(&disp_drv) == NULL) {
+// 		LOG_ERR("Failed to register display device.");
+// 		return -EPERM;
+// 	}
 
-	err = lvgl_init_input_devices();
-	if (err < 0) {
-		LOG_ERR("Failed to initialize input devices.");
-		return err;
-	}
+// 	err = lvgl_init_input_devices();
+// 	if (err < 0) {
+// 		LOG_ERR("Failed to initialize input devices.");
+// 		return err;
+// 	}
 
 	return 0;
 }

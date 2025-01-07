@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef ZEPHYR_MODULES_LVGL_MEM_H_
-#define ZEPHYR_MODULES_LVGL_MEM_H_
+#ifndef ZEPHYR_MODULES_LVGL_MEM_VEETHREE_H_
+#define ZEPHYR_MODULES_LVGL_MEM_VEETHREE_H_
 
 #include <stdlib.h>
 #include <stdbool.h>

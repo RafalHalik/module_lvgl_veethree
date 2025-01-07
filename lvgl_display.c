@@ -10,7 +10,7 @@
 
 #include "lvgl_display.h"
 
-#ifdef CONFIG_LV_Z_FLUSH_THREAD
+#ifdef CONFIG_LV_Z_FLUSH_THREAD_VEETHREE
 
 K_SEM_DEFINE(flush_complete, 0, 1);
 /* Message queue will only ever need to queue one message */
@@ -45,7 +45,7 @@ void lvgl_wait_cb(lv_disp_drv_t *disp_drv)
 
 #endif /* CONFIG_LV_Z_FLUSH_THREAD */
 
-#ifdef CONFIG_LV_Z_USE_ROUNDER_CB
+#ifdef CONFIG_LV_Z_USE_ROUNDER_CB_VEETHREE
 void lvgl_rounder_cb(lv_disp_drv_t *disp_drv, lv_area_t *area)
 {
 #if CONFIG_LV_Z_AREA_X_ALIGNMENT_WIDTH != 1
@@ -70,7 +70,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 	int err = 0;
 	struct lvgl_disp_data *data = (struct lvgl_disp_data *)disp_drv->user_data;
 
-#ifdef CONFIG_LV_Z_FLUSH_THREAD
+#ifdef CONFIG_LV_Z_FLUSH_THREAD_VEETHREE
 	disp_drv->wait_cb = lvgl_wait_cb;
 #endif
 
@@ -78,7 +78,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 	case PIXEL_FORMAT_ARGB_8888:
 		disp_drv->flush_cb = lvgl_flush_cb_32bit;
 		disp_drv->rounder_cb = lvgl_rounder_cb;
-#ifdef CONFIG_LV_COLOR_DEPTH_32
+#ifdef CONFIG_LV_COLOR_DEPTH_32_VEETHREE
 		disp_drv->set_px_cb = NULL;
 #else
 		disp_drv->set_px_cb = lvgl_set_px_cb_32bit;
@@ -93,7 +93,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 	case PIXEL_FORMAT_BGR_565:
 		disp_drv->flush_cb = lvgl_flush_cb_16bit;
 		disp_drv->rounder_cb = lvgl_rounder_cb;
-#ifdef CONFIG_LV_COLOR_DEPTH_16
+#ifdef CONFIG_LV_COLOR_DEPTH_16_VEETHREE
 		disp_drv->set_px_cb = NULL;
 #else
 		disp_drv->set_px_cb = lvgl_set_px_cb_16bit;
@@ -118,7 +118,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 
 void lvgl_flush_display(struct lvgl_display_flush *request)
 {
-#ifdef CONFIG_LV_Z_FLUSH_THREAD
+#ifdef CONFIG_LV_Z_FLUSH_THREAD_VEETHREE
 	/*
 	 * LVGL will only start a flush once the previous one is complete,
 	 * so we can reset the flush state semaphore here.

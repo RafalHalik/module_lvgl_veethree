@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef ZEPHYR_MODULES_LVGL_INPUT_DEVICE_H_
-#define ZEPHYR_MODULES_LVGL_INPUT_DEVICE_H_
+#ifndef ZEPHYR_MODULES_LVGL_INPUT_DEVICE_VEETHREE_H_
+#define ZEPHYR_MODULES_LVGL_INPUT_DEVICE_VEETHREE_H_
 
 #include <zephyr/device.h>
 #include <lvgl.h>

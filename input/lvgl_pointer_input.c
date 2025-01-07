@@ -12,7 +12,7 @@
 #include <lvgl_display.h>
 #include <zephyr/logging/log.h>
 
-LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL);
+LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL_VEETHREE);
 
 struct lvgl_pointer_input_config {
 	struct lvgl_common_input_config common_config; /* Needs to be first member */
@@ -132,7 +132,7 @@ int lvgl_pointer_input_init(const struct device *dev)
 }
 
 #define LVGL_POINTER_INPUT_DEFINE(inst)                                                            \
-	LVGL_INPUT_DEFINE(inst, pointer, CONFIG_LV_Z_POINTER_INPUT_MSGQ_COUNT,                     \
+	LVGL_INPUT_DEFINE(inst, pointer, CONFIG_LV_Z_POINTER_INPUT_MSGQ_COUNT_VEETHREE,                     \
 			  lvgl_pointer_process_event);                                             \
 	static const struct lvgl_pointer_input_config lvgl_pointer_input_config_##inst = {         \
 		.common_config.event_msgq = &LVGL_INPUT_EVENT_MSGQ(inst, pointer),                 \
@@ -143,6 +143,6 @@ int lvgl_pointer_input_init(const struct device *dev)
 	static struct lvgl_pointer_input_data lvgl_pointer_input_data_##inst;                      \
 	DEVICE_DT_INST_DEFINE(inst, NULL, NULL, &lvgl_pointer_input_data_##inst,                   \
 			      &lvgl_pointer_input_config_##inst, POST_KERNEL,                      \
-			      CONFIG_INPUT_INIT_PRIORITY, NULL);
+			      CONFIG_INPUT_INIT_PRIORITY_VEETHREE, NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(LVGL_POINTER_INPUT_DEFINE)

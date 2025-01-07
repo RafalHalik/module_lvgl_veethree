@@ -12,7 +12,7 @@
 
 #include <zephyr/logging/log.h>
 
-LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL);
+LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL_VEETHREE);
 
 struct lvgl_keypad_input_config {
 	struct lvgl_common_input_config common_config; /* Needs to be first member */
@@ -56,7 +56,7 @@ int lvgl_keypad_input_init(const struct device *dev)
 
 #define LVGL_KEYPAD_INPUT_DEFINE(inst)                                                             \
 	ASSERT_PROPERTIES(inst);                                                                   \
-	LVGL_INPUT_DEFINE(inst, keypad, CONFIG_LV_Z_KEYPAD_INPUT_MSGQ_COUNT,                       \
+	LVGL_INPUT_DEFINE(inst, keypad, CONFIG_LV_Z_KEYPAD_INPUT_MSGQ_COUNT_VEETHREE,                       \
 			  lvgl_keypad_process_event);                                              \
 	static const uint16_t lvgl_keypad_input_codes_##inst[] = DT_INST_PROP(inst, input_codes);  \
 	static const uint16_t lvgl_keypad_lvgl_codes_##inst[] = DT_INST_PROP(inst, lvgl_codes);    \
@@ -69,6 +69,6 @@ int lvgl_keypad_input_init(const struct device *dev)
 	static struct lvgl_common_input_data lvgl_common_input_data_##inst;                        \
 	DEVICE_DT_INST_DEFINE(inst, NULL, NULL, &lvgl_common_input_data_##inst,                    \
 			      &lvgl_keypad_input_config_##inst, POST_KERNEL,                       \
-			      CONFIG_INPUT_INIT_PRIORITY, NULL);
+			      CONFIG_INPUT_INIT_PRIORITY_VEETHREE, NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(LVGL_KEYPAD_INPUT_DEFINE)

@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef ZEPHYR_MODULES_LVGL_DISPLAY_H_
-#define ZEPHYR_MODULES_LVGL_DISPLAY_H_
+#ifndef ZEPHYR_MODULES_LVGL_DISPLAY_VEETHREE_H_
+#define ZEPHYR_MODULES_LVGL_DISPLAY_VEETHREE_H_
 
 #include <zephyr/drivers/display.h>
 #include <lvgl.h>

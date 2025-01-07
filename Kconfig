@@ -2,61 +2,61 @@
 # Copyright 2023 NXP
 # SPDX-License-Identifier: Apache-2.0
 
-config ZEPHYR_LVGL_MODULE
+config ZEPHYR_LVGL_MODULE_VEETHREE
 	bool
 
-config LVGL
+config LVGL_VEETHREE
 	bool "LVGL support"
 	help
 	  This option enables the LVGL graphics library.
 
-if LVGL
+if LVGL_VEETHREE
 
-config LV_USE_MONKEY
+config LV_USE_MONKEY_VEETHREE
 	bool
 
-config LV_DPI_DEF
+config LV_DPI_DEF_VEETHREE
 	int
 
-config LV_CONF_SKIP
+config LV_CONF_SKIP_VEETHREE
 	bool
 	default n
 
-config LV_USE_LOG
+config LV_USE_LOG_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_NONE
+config LV_LOG_LEVEL_NONE_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_ERROR
+config LV_LOG_LEVEL_ERROR_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_WARN
+config LV_LOG_LEVEL_WARN_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_INFO
+config LV_LOG_LEVEL_INFO_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_USER
+config LV_LOG_LEVEL_USER_VEETHREE
 	bool
 
-config LV_LOG_LEVEL_TRACE
+config LV_LOG_LEVEL_TRACE_VEETHREE
 	bool
 
-config LV_Z_LOG_LEVEL
+config LV_Z_LOG_LEVEL_VEETHREE
 	int
-	default 0 if LV_LOG_LEVEL_NONE || !LV_USE_LOG
-	default 1 if LV_LOG_LEVEL_ERROR
-	default 2 if LV_LOG_LEVEL_WARN
-	default 3 if LV_LOG_LEVEL_INFO
-	default 3 if LV_LOG_LEVEL_USER
-	default 4 if LV_LOG_LEVEL_TRACE
+	default 0 if LV_LOG_LEVEL_NONE_VEETHREE || !LV_USE_LOG_VEETHREE
+	default 1 if LV_LOG_LEVEL_ERROR_VEETHREE
+	default 2 if LV_LOG_LEVEL_WARN_VEETHREE
+	default 3 if LV_LOG_LEVEL_INFO_VEETHREE
+	default 3 if LV_LOG_LEVEL_USER_VEETHREE
+	default 4 if LV_LOG_LEVEL_TRACE_VEETHREE
 
-config LV_Z_USE_ROUNDER_CB
+config LV_Z_USE_ROUNDER_CB_VEETHREE
 	bool
-	default y if LV_Z_AREA_X_ALIGNMENT_WIDTH != 1 || LV_Z_AREA_Y_ALIGNMENT_WIDTH != 1
+	default y if LV_Z_AREA_X_ALIGNMENT_WIDTH_VEETHREE != 1 || LV_Z_AREA_Y_ALIGNMENT_WIDTH_VEETHREE != 1
 
-config APP_LINK_WITH_LVGL
+config APP_LINK_WITH_LVGL_VEETHREE
 	bool "Link 'app' with LVGL"
 	default y
 	help
@@ -64,54 +64,54 @@ config APP_LINK_WITH_LVGL
 	  disabled if the include paths for LVGL are causing aliasing
 	  issues for 'app'.
 
-config LV_Z_USE_FILESYSTEM
+config LV_Z_USE_FILESYSTEM_VEETHREE
 	bool "LVGL file system support"
 	depends on FILE_SYSTEM
 	default y if FILE_SYSTEM
 	help
 	  Enable LittlevGL file system
 
-choice LV_COLOR_DEPTH
-	default LV_COLOR_DEPTH_16
+choice LV_COLOR_DEPTH_VEETHREE
+	default LV_COLOR_DEPTH_16_VEETHREE
 	prompt "Color depth (bits per pixel)"
 
-	config LV_COLOR_DEPTH_32
+	config LV_COLOR_DEPTH_32_VEETHREE
 		bool "32: ARGB8888"
-	config LV_COLOR_DEPTH_16
+	config LV_COLOR_DEPTH_16_VEETHREE
 		bool "16: RGB565"
-	config LV_COLOR_DEPTH_8
+	config LV_COLOR_DEPTH_8_VEETHREE
 		bool "8: RGB232"
-	config LV_COLOR_DEPTH_1
+	config LV_COLOR_DEPTH_1_VEETHREE
 		bool "1: monochrome"
 endchoice
 
-config LV_COLOR_16_SWAP
+config LV_COLOR_16_SWAP_VEETHREE
 	bool
 
-config LV_Z_FLUSH_THREAD
+config LV_Z_FLUSH_THREAD_VEETHREE
 	bool "Flush LVGL frames in a separate thread"
 	help
 	  Flush LVGL frames in a separate thread, while the primary thread
 	  renders the next LVGL frame. Can be disabled if the performance
 	  gain this approach offers is not required
 
-if LV_Z_FLUSH_THREAD
+if LV_Z_FLUSH_THREAD_VEETHREE
 
-config LV_Z_FLUSH_THREAD_STACK_SIZE
+config LV_Z_FLUSH_THREAD_STACK_SIZE_VEETHREE
 	int "Stack size for flushing thread"
 	default 1024
 	help
 	  Stack size for LVGL flush thread, which will call display_write
 
-config LV_Z_FLUSH_THREAD_PRIO
+config LV_Z_FLUSH_THREAD_PRIO_VEETHREE
 	int "LVGL flush thread priority"
 	default 0
 	help
 	  Cooperative priority of LVGL flush thread.
 
-endif # LV_Z_FLUSH_THREAD
+endif # LV_Z_FLUSH_THREAD_VEETHREE
 
-config LV_Z_AREA_X_ALIGNMENT_WIDTH
+config LV_Z_AREA_X_ALIGNMENT_WIDTH_VEETHREE
 	int "Frame X alignment size"
 	default 1
 	help
@@ -119,7 +119,7 @@ config LV_Z_AREA_X_ALIGNMENT_WIDTH
 	  the current frame dimensions to meet display and/or LCD host
 	  controller requirements. The value must be power of 2.
 
-config LV_Z_AREA_Y_ALIGNMENT_WIDTH
+config LV_Z_AREA_Y_ALIGNMENT_WIDTH_VEETHREE
 	int "Frame Y alignment size"
 	default 1
 	help
@@ -127,10 +127,10 @@ config LV_Z_AREA_Y_ALIGNMENT_WIDTH
 	  the current frame dimensions to meet display and/or LCD host
 	  controller requirements. The value must be power of 2.
 
-config LV_USE_GPU_STM32_DMA2D
+config LV_USE_GPU_STM32_DMA2D_VEETHREE
 	bool
 
-config LV_GPU_DMA2D_CMSIS_INCLUDE
+config LV_GPU_DMA2D_CMSIS_INCLUDE_VEETHREE
 	string
 	help
 	  Must be defined to include path of CMSIS header of target processor

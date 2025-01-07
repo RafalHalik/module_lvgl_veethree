@@ -14,7 +14,7 @@
 #include "lvgl_encoder_input.h"
 #include "lvgl_keypad_input.h"
 
-LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL);
+LOG_MODULE_DECLARE(lvgl, CONFIG_LV_Z_LOG_LEVEL_VEETHREE);
 
 lv_indev_t *lvgl_input_get_indev(const struct device *dev)
 {
@@ -77,21 +77,21 @@ int lvgl_input_register_driver(lv_indev_type_t indev_type, const struct device *
 
 int lvgl_init_input_devices(void)
 {
-#ifdef CONFIG_LV_Z_POINTER_INPUT
+#ifdef CONFIG_LV_Z_POINTER_INPUT_VEETHREE
 	DT_FOREACH_STATUS_OKAY_VARGS(zephyr_lvgl_pointer_input, LV_DEV_INIT,
 				     lvgl_pointer_input_init);
 #endif /* CONFIG_LV_Z_POINTER_INPUT */
 
-#ifdef CONFIG_LV_Z_BUTTON_INPUT
+#ifdef CONFIG_LV_Z_BUTTON_INPUT_VEETHREE
 	DT_FOREACH_STATUS_OKAY_VARGS(zephyr_lvgl_button_input, LV_DEV_INIT, lvgl_button_input_init);
 #endif /* CONFIG_LV_Z_BUTTON_INPUT */
 
-#ifdef CONFIG_LV_Z_ENCODER_INPUT
+#ifdef CONFIG_LV_Z_ENCODER_INPUT_VEETHREE
 	DT_FOREACH_STATUS_OKAY_VARGS(zephyr_lvgl_encoder_input, LV_DEV_INIT,
 				     lvgl_encoder_input_init);
 #endif /* CONFIG_LV_Z_ENCODER_INPUT */
 
-#ifdef CONFIG_LV_Z_KEYPAD_INPUT
+#ifdef CONFIG_LV_Z_KEYPAD_INPUT_VEETHREE
 	DT_FOREACH_STATUS_OKAY_VARGS(zephyr_lvgl_keypad_input, LV_DEV_INIT, lvgl_keypad_input_init);
 #endif /* CONFIG_LV_Z_KEYPAD_INPUT */
 
